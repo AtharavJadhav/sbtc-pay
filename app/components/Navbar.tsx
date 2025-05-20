@@ -5,6 +5,7 @@ import Logo from './Logo';
 import { WalletConnectButton } from './wallet-connect-button';
 import toast from 'react-hot-toast';
 import { isConnected } from '@stacks/connect';
+import Link from 'next/link';
 
 const Navbar: FC = () => {
   const handleDashboardClick = (e: React.MouseEvent) => {
@@ -23,13 +24,12 @@ const Navbar: FC = () => {
 
           {/* Center Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a
+            <Link
               href="/dashboard"
-              onClick={handleDashboardClick}
-              className="text-gray-600 hover:text-indigo-600 transition-colors duration-200"
+              className="text-gray-600 hover:text-gray-900 text-lg font-bold"
             >
               Dashboard
-            </a>
+            </Link>
           </div>
 
           {/* Right Side - Connect Wallet */}
