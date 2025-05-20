@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Link from 'next/link';
 
 interface LogoProps {
   showText?: boolean;
@@ -7,7 +8,7 @@ interface LogoProps {
 
 const Logo: FC<LogoProps> = ({ showText = true, className = '' }) => {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <Link href="/" className={`flex items-center gap-2 ${className} transition-opacity`}>
       <div className="h-8 w-8 rounded-md bg-indigo-600 flex items-center justify-center text-white font-bold">
         sP
       </div>
@@ -16,7 +17,7 @@ const Logo: FC<LogoProps> = ({ showText = true, className = '' }) => {
           sBTC-Pay
         </span>
       )}
-    </div>
+    </Link>
   );
 };
 

@@ -1,17 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { connect, disconnect, isConnected } from '@stacks/connect';
 import toast from 'react-hot-toast';
 import { WalletDropdown } from './wallet-dropdown';
 
-export const WalletConnectButton = () => {
+const WalletConnectButton: FC = () => {
+  const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsWalletConnected(isConnected());
+    }
+  }, []);
 
   const handleConnect = async () => {
     try {
       setIsConnecting(true);
       await connect();
+      setIsWalletConnected(true);
       toast.success('Wallet connected successfully!');
     } catch (error) {
       console.error('Error connecting wallet:', error);
@@ -24,14 +32,13 @@ export const WalletConnectButton = () => {
   const handleDisconnect = () => {
     try {
       disconnect();
+      setIsWalletConnected(false);
       toast.success('Wallet disconnected successfully!');
     } catch (error) {
       console.error('Error disconnecting wallet:', error);
       toast.error('Failed to disconnect wallet. Please try again.');
     }
   };
-
-  const isWalletConnected = isConnected();
 
   if (isWalletConnected) {
     return <WalletDropdown />;
@@ -46,4 +53,6 @@ export const WalletConnectButton = () => {
       {isConnecting ? 'Connecting...' : isWalletConnected ? 'Disconnect Wallet' : 'Connect Wallet'}
     </button>
   );
-}; 
+};
+
+export { WalletConnectButton }; 

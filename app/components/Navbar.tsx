@@ -1,8 +1,19 @@
+'use client';
+
 import { FC } from 'react';
 import Logo from './Logo';
 import { WalletConnectButton } from './wallet-connect-button';
+import toast from 'react-hot-toast';
+import { isConnected } from '@stacks/connect';
 
 const Navbar: FC = () => {
+  const handleDashboardClick = (e: React.MouseEvent) => {
+    if (!isConnected()) {
+      e.preventDefault();
+      toast.error('Please connect to a wallet');
+    }
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50">
       <div className="container mx-auto px-4">
@@ -14,6 +25,7 @@ const Navbar: FC = () => {
           <div className="hidden md:flex items-center space-x-8">
             <a
               href="/dashboard"
+              onClick={handleDashboardClick}
               className="text-gray-600 hover:text-indigo-600 transition-colors duration-200"
             >
               Dashboard
