@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import { Plus, Clock } from 'lucide-react';
 import { isConnected } from '@stacks/connect';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 interface Subscription {
   id: string;
@@ -16,6 +17,8 @@ interface Subscription {
 }
 
 const Dashboard: FC = () => {
+  const router = useRouter();
+
   // Mock data
   const [subscriptions] = useState<Subscription[]>([
     {
@@ -69,7 +72,7 @@ const Dashboard: FC = () => {
                 toast.error('Please connect to a wallet');
                 return;
               }
-              // Handle new subscription
+              router.push('/subscription/new');
             }}
             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
           >
